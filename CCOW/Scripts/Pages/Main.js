@@ -7,8 +7,6 @@ Off channel call backs from sentiliion windows service
 
 **************************** */
 
-
-
 // called when another app starts a context change, returns value indicating this app is ready
 Caradigm.IAM.IContextParticipant.ContextChangePending = function (proposedcontextcoupon) {
     cmv.addstatus("Context change pending received");
@@ -33,10 +31,9 @@ Caradigm.IAM.IContextParticipant.ContextChangeTerminated = function () {
 
 /* *****************************
 
-call backs from jContextor calls
+call backs from IContextor calls
 
 **************************** */
-
 
 function JoinCallBack(token, statuscode) {
     if (statuscode == Caradigm.IAM.Success) {
@@ -142,6 +139,7 @@ var patientList = [
 var ContextViewModel = function () {
     var self = this;
 
+    // used by selector for options
     self.Patients = 
         ko.observableArray([
         { patientname: 'Smith, John', patientid: 0 },
@@ -196,10 +194,7 @@ var ContextViewModel = function () {
         } else {
             Caradigm.IAM.IContextor.SuspendAsync(suspendCallback);
         }
-    };
-
-
-   
+    };  
 }
 
 
