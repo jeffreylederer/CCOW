@@ -14,4 +14,4 @@ In the visual studio debugger, every works except:
       
       handle context change (socket error unknow cause as an alert from the IContextor.js library)
       
-When this application is published to a Windows 2008 server, it shows the same behavior as Visual Studio debugger. When it is published to a Windows 2016 server, it never returns from the Join callback.
+When this application is published to a Windows 2008 server, it shows the same behavior as Visual Studio debugger. When it is published to a Windows 2016 server, it never calls the Join callback.
