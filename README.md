@@ -5,7 +5,8 @@ This application has two views:
 
      1. CCOWINIT - This performs a join with the sentillion service
      
-     2. MAIN - Used to test the other methods (get current context, set new context, suspend and resume contex, and handle context changes)
+     2. MAIN - Used to test the other methods (get current context, set new context, 
+     suspend and resume contex, and handle context changes)
 
 In the visual studio debugger, every works except:
 
