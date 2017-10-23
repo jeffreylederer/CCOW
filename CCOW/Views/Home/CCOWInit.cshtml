@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "CCOWInit Page";
+}
+
+Waiting join context
+   
+Status : <span data-bind="status" ></span>
+@Html.Hidden("RedirectTo", Url.Action("Main", "Home"))
+
+@section scripts {
+   
+<script type="text/javascript" src="~/Scripts/Pages/CCOWInit.js"></script>
+
+}

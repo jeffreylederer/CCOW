@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Main Page";
+}
+<h2>Main</h2>
+<br/><br/>
+Change Context: <select data-bind="options: Patients,
+        optionsText: 'patientname',
+        value: selectedPatient,
+        optionsCaption: 'Choose...',
+        event:{ change: SetContext}">></select> <br/><br />
+<button type="button" data-bind="click: Resume, text: SuspendedText"></button> <br/><br />
+
+  
+<table class="table">
+    <tr>
+
+        <th style="text-align: left; width: 200px;">Key</th>
+        <th style="text-align: left; width: 200px">Value</th>
+    </tr>
+
+    <tbody data-bind="foreach: context">
+    <tr>
+        <td>
+            <span data-bind="text: contextname"></span>
+        </td>
+        <td>
+            <span data-bind="text: contextvalue"></span>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <tr>
+        <th style="text-align: left; width: 200px;">status</th>
+    </tr>
+
+    <tbody data-bind="foreach: status">
+    <tr>
+        <td>
+            <span data-bind="text: $data"></span>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+
+@section scripts {
+    
+<script type="text/javascript" src="~/Scripts/Pages/Main.js"></script>
+}
