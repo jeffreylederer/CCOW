@@ -204,7 +204,7 @@ var ContextViewModel = function () {
 
 
 $(document).ready(function () {
-    Caradigm.LogLevels = Caradigm.IAM.LogLevels.Finest;  // log everythibng
+    Caradigm.LogLevels = Caradigm.IAM.LogLevels.Finest;  // log everything
     cmv = new ContextViewModel();
     ko.applyBindings(cmv);  // bind model
     // get context
