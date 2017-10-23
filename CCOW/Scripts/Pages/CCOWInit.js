@@ -3,9 +3,9 @@ var url = $("#RedirectTo").val();
 
 // call back for join
 function JoinCallBack(token, statuscode) {
-    if (statuscode == Caradigm.IAM.Success) {
+    if (statuscode === Caradigm.IAM.Success) {
         window.location.href = url;
-    } else if (status == Caradigm.IAM.CCOWException.AlreadyJoinedException) {
+    } else if (status === Caradigm.IAM.CCOWException.AlreadyJoinedException) {
         window.location.href = url;
     } else {
         cmv.status.text('not joined: ' + statuscode.message);

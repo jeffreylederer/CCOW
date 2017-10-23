@@ -3,10 +3,9 @@ var lastcontextchange;
 
 /* *****************************
 
-Off channel call backs from sentiliion windows service
+Off channel call backs from Sentiliion windows service
 
 **************************** */
-
 
 
 // called when another app starts a context change, returns value indicating this app is ready
@@ -33,15 +32,15 @@ Caradigm.IAM.IContextParticipant.ContextChangeTerminated = function () {
 
 /* *****************************
 
-call backs from jContextor calls
+call backs from IContextor calls
 
 **************************** */
 
 
 function JoinCallBack(token, statuscode) {
-    if (statuscode == Caradigm.IAM.Success) {
+    if (statuscode === Caradigm.IAM.Success) {
         cmv.addstatus("rejoined context");
-    } else if (status == Caradigm.IAM.CCOWException.AlreadyJoinedException) {
+    } else if (status === Caradigm.IAM.CCOWException.AlreadyJoinedException) {
         cmv.addstatus("tried to rejoined context but already joined");
     } else {
         cmv.addstatus('tried to rejoin context but could not: ' + statuscode.message);
@@ -50,7 +49,7 @@ function JoinCallBack(token, statuscode) {
 
 // callback on get context, will display the current context
 function onGetContext(token, statuscode, contextitems) {
-    if (statuscode != Caradigm.IAM.Success) {
+    if (statuscode !== Caradigm.IAM.Success) {
         cmv.addstatus('error getting context: ' + statuscode.message);
     }
     // else iterate through context_items
@@ -61,9 +60,9 @@ function onGetContext(token, statuscode, contextitems) {
 }
 
 function setContextCallback(token, statuscode, noContinue, responseList) {
-    if (statuscode == Caradigm.IAM.Success) {
+    if (statuscode === Caradigm.IAM.Success) {
         if (!noContinue) {
-            if (responseList.length == 0) {
+            if (responseList.length === 0) {
                 cmv.addstatus("Context change is committed");
             } else {
                 $.each(responseList,
@@ -80,7 +79,7 @@ function setContextCallback(token, statuscode, noContinue, responseList) {
 }
 
 function suspendCallback(token, statuscode) {
-    if (statuscode != Caradigm.IAM.Success) {
+    if (statuscode !== Caradigm.IAM.Success) {
         cmv.addstatus('error Supending Context: ' + statuscode.message);
     }
     // else iterate through context_items
@@ -91,7 +90,7 @@ function suspendCallback(token, statuscode) {
 }
 
 function resumeCallback(token, statuscode) {
-    if (statuscode != Caradigm.IAM.Success) {
+    if (statuscode !== Caradigm.IAM.Success) {
         cmv.addstatus('error Resume Context: ' + statuscode.message);
     }
     // else iterate through context_items
@@ -166,10 +165,10 @@ var ContextViewModel = function () {
     self.addtoarray = function(assoc) {
         self.context.removeAll();
         for (var key in assoc) {
-            self.context.push({
-                contextname: key,
-                contextvalue: assoc[key]
-            });
+            if (assoc.hasOwnProperty(key)) {
+                self.context.push(
+                    { contextvalue: assoc[key], contextname: key });
+            }
         }
     }.bind(self);
 
@@ -196,15 +195,12 @@ var ContextViewModel = function () {
         } else {
             Caradigm.IAM.IContextor.SuspendAsync(suspendCallback);
         }
-    };
-
-
-   
+    }; 
 }
 
 
 $(document).ready(function () {
-    Caradigm.LogLevels = Caradigm.IAM.LogLevels.Finest;  // log everythibng
+    Caradigm.LogLevels = Caradigm.IAM.LogLevels.Finest;  // log everything
     cmv = new ContextViewModel();
     ko.applyBindings(cmv);  // bind model
     // get context
