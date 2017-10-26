@@ -11,7 +11,7 @@ Off channel call backs from Sentiliion windows service
 // called when another app starts a context change, returns value indicating this app is ready
 Caradigm.IAM.IContextParticipant.ContextChangePending = function (proposedcontextcoupon) {
     cmv.addstatus("Context change pending received");
-    return "";
+    return null;
 };
 
 // when context change is approved by all apps, this is called. Will get the latest context
@@ -61,17 +61,14 @@ function onGetContext(token, statuscode, contextitems) {
 
 function setContextCallback(token, statuscode, noContinue, responseList) {
     if (statuscode === Caradigm.IAM.Success) {
-        if (!noContinue) {
-            if (responseList.length === 0) {
-                cmv.addstatus("Context change is committed");
-            } else {
-                $.each(responseList,
+        if (noContinue) {
+            $.each(responseList,
                     function(index, value) {
                         cmv.addstatus("Reason for not committing: " + value);
                     });
-            }
         } else {
-            cmv.addstatus("Context change could not continue");
+            cmv.addstatus('Set Context successful');
+            Caradigm.IAM.IContextor.GetContextAsync(false, onGetContext);
         }
     } else {
         cmv.addstatus('error setting context: ' + statuscode.message);
@@ -114,11 +111,10 @@ var patientList = [
         'patient.id.mrn.ssn': '172385585',
         'patient.id.mrn.medipacnumeric': '784273931',
         'patient.co.sex': 'Male',
-        'user.id.logon.1upmcacct': 'greegh',
         'patient.id.mrn.epic': '841110407',
         'patient.id.mrn.epicnumeric': '841110407',
         'patient.id.mrn.medipac': '784273931',
-        'patient.id.mrn.medipacdashes': '784-27-931',
+        'patient.id.mrn.medipacdashes': '784-27-3931',
         'patient.co.datetimeofbirth': '194704170000'
     },
     {
@@ -127,7 +123,6 @@ var patientList = [
         'patient.id.mrn.ssn': '186540957',
         'patient.id.mrn.medipacnumeric': '981663142',
         'patient.co.sex': 'Female',
-        'user.id.logon.1upmcacct': 'greegh',
         'patient.id.mrn.epic': '737891347',
         'patient.id.mrn.epicnumeric': '737891347',
         'patient.id.mrn.medipac': '981663142',
