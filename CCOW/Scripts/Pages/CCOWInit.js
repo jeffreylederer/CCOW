@@ -23,10 +23,15 @@ var ContextViewModel = function () {
 }
 
 
-  
- $(document).ready(function () {
-        Caradigm.LogLevels = Caradigm.IAM.LogLevels.Finest;  // log everythibng
-        cmv = new ContextViewModel();
-        ko.applyBindings(cmv);  // bind model
+$(document).ready(function() {
+    Caradigm.LogLevels = Caradigm.IAM.LogLevels.Finest; // log everythibng
+    cmv = new ContextViewModel();
+    ko.applyBindings(cmv); // bind model
+    try {
         Caradigm.IAM.IContextor.JoinAsync("PrintOnDemand#", true, JoinCallBack);
+    } catch (err) {
+        cmv.status.text('not joined, exception: ' + err.message);
+    }
+
 });
+

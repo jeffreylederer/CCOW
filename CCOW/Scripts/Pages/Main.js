@@ -184,7 +184,11 @@ var ContextViewModel = function () {
         if (self.selectedPatient()) {
             var index = self.selectedPatient().patientid;
             var list = patientList[index];
-            Caradigm.IAM.IContextor.SetContextAsync(list, true, setContextCallback);
+            try {
+                Caradigm.IAM.IContextor.SetContextAsync(list, true, setContextCallback);
+            } catch (err) {
+                cmv.addstatus("Set context exception: " + err.message);
+            }
         }
     };
 
