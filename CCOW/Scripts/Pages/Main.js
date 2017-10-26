@@ -7,25 +7,32 @@ Off channel call backs from Sentiliion windows service
 
 **************************** */
 
+Caradigm.IAM.IContextParticipant =
+{
+    OnContextChangePending: OnContextChangePending,
+    OnContextChangeAccepted: OnContextChangeAccepted,
+    OnContextChangeCanceled: OnContextChangeCanceled,
+    OnContextTerminated: OnContextTerminated
+};
 
 // called when another app starts a context change, returns value indicating this app is ready
-Caradigm.IAM.IContextParticipant.ContextChangePending = function (proposedcontextcoupon) {
+function OnContextChangePending (proposedcontextcoupon) {
     cmv.addstatus("Context change pending received");
-    return null;
+    return '';
 };
 
 // when context change is approved by all apps, this is called. Will get the latest context
-Caradigm.IAM.IContextParticipant.ContextChangeAccepted = function (contextcoupon) {
+function OnContextChangeAccepted(contextcoupon) {
     Caradigm.IAM.IContextor.GetContextAsync(false, onGetContext);
     cmv.addstatus("Context changed received");
 };
 
-Caradigm.IAM.IContextParticipant.ContextChangeCanceled = function () {
+function OnContextChangeCanceled() {
     cmv.addstatus("Context change cancelled");
 };
 
 // context terminated by admin, try rejoining context
-Caradigm.IAM.IContextParticipant.ContextChangeTerminated = function () {
+function OnContextTerminated() {
     Caradigm.IAM.IContextor.JoinAsync("PrintOnDemand#", true, JoinCallBack);
 };
 
